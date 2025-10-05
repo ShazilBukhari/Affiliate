@@ -399,31 +399,31 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      productsCollectionRef,
-      async (querySnapshot) => {
-        if (querySnapshot.empty && initialProducts.length > 0) {
-          console.log("No products found. Seeding initial data...");
-          const batch = writeBatch(db);
-          initialProducts.forEach((product) => {
-            const newDocRef = doc(productsCollectionRef);
-            batch.set(newDocRef, product);
-          });
-          await batch.commit();
-        } else {
-          const productsData = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setAllProducts(productsData);
-        }
-      },
-      (error) => {
-        console.error("Error fetching products:", error);
+  let seeded = false;
+
+  const unsubscribe = onSnapshot(
+    productsCollectionRef,
+    async (querySnapshot) => {
+      if (querySnapshot.empty && initialProducts.length > 0 && !seeded) {
+        seeded = true; // once seeded, set flag to avoid re-seeding
+        const batch = writeBatch(db);
+        initialProducts.forEach((product) => {
+          const newDocRef = doc(productsCollectionRef);
+          batch.set(newDocRef, product);
+        });
+        await batch.commit();
+      } else {
+        const productsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAllProducts(productsData);
       }
-    );
-    return () => unsubscribe();
-  }, []);
+    }
+  );
+  return () => unsubscribe();
+}, []);
+
 
   const categories = ["All", ...new Set(allProducts.map((p) => p.category))];
   const filteredProducts =
