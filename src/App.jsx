@@ -399,19 +399,19 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-  let seeded = false;
+  const hasSeeded = localStorage.getItem("zentro_seeded");
 
   const unsubscribe = onSnapshot(
     productsCollectionRef,
     async (querySnapshot) => {
-      if (querySnapshot.empty && initialProducts.length > 0 && !seeded) {
-        seeded = true; // once seeded, set flag to avoid re-seeding
+      if (querySnapshot.empty && initialProducts.length > 0 && !hasSeeded) {
         const batch = writeBatch(db);
         initialProducts.forEach((product) => {
           const newDocRef = doc(productsCollectionRef);
           batch.set(newDocRef, product);
         });
         await batch.commit();
+        localStorage.setItem("zentro_seeded", "true");
       } else {
         const productsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -421,8 +421,10 @@ export default function App() {
       }
     }
   );
+
   return () => unsubscribe();
 }, []);
+
 
 
   const categories = ["All", ...new Set(allProducts.map((p) => p.category))];
