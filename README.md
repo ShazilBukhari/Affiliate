@@ -1,16 +1,35 @@
-# React + Vite
+Step 1 :- 
+VITE_FIREBASE_CONFIG='{"apiKey":"AIzaSyAapnaKey","authDomain":"your-project.firebaseapp.com","projectId":"your-project-id"}'<----
+VITE_APP_ID=zentrodeals<----
+VITE_ADMIN_PASS=admin123<----
+🔁 Replace the Firebase config values with your actual ones.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Step 2 :-
+const firebaseConfig =
+  typeof __firebase_config !== "undefined"
+    ? JSON.parse(__firebase_config)<---
+    : JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);<----
+Step 3:- 
+const appId = import.meta.env.VITE_APP_ID || "zentrodeals";<------
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASS || "admin123";<-----
+npm run dev
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ Bas itna hi karna hai.
 
-## React Compiler
+Agar yeh 5 step tune kar liye, toh tujhe aur kuch nahi chhedna.
+Sab feature: login, product add/delete, filtering, sab kaam karega ✅
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLrWOEdyapjwmdE3XzUkGddLS3SzsdMPE",
+  authDomain: "shazil111.firebaseapp.com",
+  projectId: "shazil111",
+  storageBucket: "shazil111.firebasestorage.app",
+  messagingSenderId: "70565287439",
+  appId: "1:70565287439:web:0408f97786e468ac2db57a",
+  measurementId: "G-FYX4QMEFZV"
+};
